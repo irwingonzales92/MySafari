@@ -27,11 +27,18 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSString *addressString = textField.text;
+    NSString *addressString = [[NSString alloc]init];
+    addressString = textField.text;
+    
+    if ([textField.text rangeOfString:@"http://"].location == NSNotFound)
+    {
+        addressString = [NSString stringWithFormat:@"http://%@", textField.text];
+    }
     NSURL *addressURL = [NSURL URLWithString:addressString];
     NSURLRequest *addressRequest = [NSURLRequest requestWithURL:addressURL];
     [self.webView loadRequest:addressRequest];
     return true;
+    
 }
 
 -(void)webViewDidStartLoad:(UIWebView *)webView
@@ -62,6 +69,10 @@
 - (IBAction)onStopLoadingButtonPressed:(id)sender
 {
     [self.webView stopLoading];
+}
+- (IBAction)onReloadButtonPressed:(id)sender
+{
+    [self.webView reload];
 }
 
 @end
