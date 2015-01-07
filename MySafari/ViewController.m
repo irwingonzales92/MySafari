@@ -19,7 +19,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
     NSString *addressString = @"http://9gag.com";
     NSURL *addressURL = [NSURL URLWithString:addressString];
     NSURLRequest *addressRequest = [NSURLRequest requestWithURL:addressURL];
@@ -48,9 +47,21 @@
 }
 - (IBAction)backButtonPressed:(id)sender
 {
-    if ([_webView canGoBack]) {
-        [_webView goBack];
+    if ([self.webView canGoBack]) {
+        [self.webView goBack];
     }
+}
+
+- (IBAction)onForwardButtonPressed:(id)sender
+{
+    if ([self.webView canGoForward]) {
+        [self.webView goForward];
+    }
+}
+
+- (IBAction)onStopLoadingButtonPressed:(id)sender
+{
+    [self.webView stopLoading];
 }
 
 @end
