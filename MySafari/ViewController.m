@@ -20,6 +20,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    NSString *addressString = @"http://9gag.com";
+    NSURL *addressURL = [NSURL URLWithString:addressString];
+    NSURLRequest *addressRequest = [NSURLRequest requestWithURL:addressURL];
+    [self.webView loadRequest:addressRequest];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
