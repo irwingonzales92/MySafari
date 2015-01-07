@@ -11,6 +11,7 @@
 @interface ViewController () <UIWebViewDelegate, UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 @property (strong, nonatomic) IBOutlet UITextField *urlTextField;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
 
@@ -28,6 +29,24 @@
     NSURLRequest *addressRequest = [NSURLRequest requestWithURL:addressURL];
     [self.webView loadRequest:addressRequest];
     return true;
+}
+
+-(void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [self.spinner startAnimating];
+    self.spinner.hidden = false;
+}
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self.spinner stopAnimating];
+    self.spinner.hidden = true;
+}
+- (IBAction)backButtonPressed:(id)sender
+{
+    if ([_webView canGoBack]) {
+        [_webView goBack];
+    }
 }
 
 @end
