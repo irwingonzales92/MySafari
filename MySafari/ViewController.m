@@ -52,18 +52,19 @@
 {
     [self.spinner startAnimating];
     self.spinner.hidden = false;
-    NSString *currentWebsiteTitle = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    self.superCoolNavigationItem.title = currentWebsiteTitle;
-    
-    self.urlTextField.text = [[self.webView.request URL]absoluteString];
-    
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [self.spinner stopAnimating];
     self.spinner.hidden = true;
+
+    NSString *currentWebsiteTitle = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    self.superCoolNavigationItem.title = currentWebsiteTitle;
+
+    self.urlTextField.text = [[self.webView.request URL]absoluteString];
 }
+
 - (IBAction)backButtonPressed:(id)sender
 {
     if ([self.webView canGoBack]) {
