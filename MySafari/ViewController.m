@@ -89,13 +89,15 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     self.webView.scrollView.delegate = self;
+    
     if (self.lastContentOffset > scrollView.contentOffset.y)
     {
-        NSLog(@"Scrolling Up");
+        self.urlTextField.backgroundColor = [UIColor clearColor];
+        self.urlTextField.textColor = [UIColor clearColor];
     }
     else if (self.lastContentOffset < scrollView.contentOffset.y)
     {
-        NSLog(@"Scrolling Down");
+        NSLog(@"I'm Working");
     }
 }
 
