@@ -8,11 +8,11 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <UIWebViewDelegate, UITextFieldDelegate>
+@interface ViewController () <UIWebViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, UIScrollViewDelegate>
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 @property (strong, nonatomic) IBOutlet UITextField *urlTextField;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
-
+@property (nonatomic) CGFloat lastContentOffset;
 @end
 
 @implementation ViewController
@@ -66,13 +66,37 @@
     }
 }
 
+
 - (IBAction)onStopLoadingButtonPressed:(id)sender
 {
     [self.webView stopLoading];
 }
+
 - (IBAction)onReloadButtonPressed:(id)sender
 {
     [self.webView reload];
+}
+
+- (IBAction)onPlusButtonPressed:(id)sender {
+    UIAlertView *alertView = [[UIAlertView alloc] init];
+    alertView.delegate = self;
+    alertView.title = @"Coming Soon";
+    [alertView addButtonWithTitle:@"Dismiss"];
+    [alertView show];
+}
+
+// stuff not working yet
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    self.webView.scrollView.delegate = self;
+    if (self.lastContentOffset > scrollView.contentOffset.y)
+    {
+        NSLog(@"Scrolling Up");
+    }
+    else if (self.lastContentOffset < scrollView.contentOffset.y)
+    {
+        NSLog(@"Scrolling Down");
+    }
 }
 
 @end
