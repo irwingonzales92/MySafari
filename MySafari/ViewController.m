@@ -23,6 +23,7 @@
     NSURL *addressURL = [NSURL URLWithString:addressString];
     NSURLRequest *addressRequest = [NSURLRequest requestWithURL:addressURL];
     [self.webView loadRequest:addressRequest];
+    self.webView.scrollView.delegate = self;
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -88,17 +89,16 @@
 // stuff not working yet
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    self.webView.scrollView.delegate = self;
-    
     if (self.lastContentOffset > scrollView.contentOffset.y)
     {
-        self.urlTextField.backgroundColor = [UIColor clearColor];
-        self.urlTextField.textColor = [UIColor clearColor];
+        self.urlTextField.hidden = false;
     }
     else if (self.lastContentOffset < scrollView.contentOffset.y)
     {
-        NSLog(@"I'm Working");
+        self.urlTextField.hidden = true;
     }
+
+    self.lastContentOffset = scrollView.contentOffset.x;
 }
 
 @end
