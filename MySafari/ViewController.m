@@ -12,6 +12,8 @@
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 @property (strong, nonatomic) IBOutlet UITextField *urlTextField;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property (strong, nonatomic) IBOutlet UINavigationItem *superCoolNavigationItem;
+
 @property (nonatomic) CGFloat lastContentOffset;
 @end
 
@@ -28,14 +30,18 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSString *addressString = [[NSString alloc]init];
-    addressString = textField.text;
+    NSString *newAddressString = [[NSString alloc]init];
     
     if ([textField.text rangeOfString:@"http://"].location == NSNotFound)
     {
-        addressString = [NSString stringWithFormat:@"http://%@", textField.text];
+        newAddressString = [NSString stringWithFormat:@"http://%@", textField.text];
     }
-    NSURL *addressURL = [NSURL URLWithString:addressString];
+    else
+    {
+        newAddressString = textField.text;
+    }
+    
+    NSURL *addressURL = [NSURL URLWithString:newAddressString];
     NSURLRequest *addressRequest = [NSURLRequest requestWithURL:addressURL];
     [self.webView loadRequest:addressRequest];
     return true;
@@ -46,6 +52,11 @@
 {
     [self.spinner startAnimating];
     self.spinner.hidden = false;
+    NSString *currentWebsiteTitle = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    self.superCoolNavigationItem.title = currentWebsiteTitle;
+    
+    self.urlTextField.text = [[self.webView.request URL]absoluteString];
+    
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView
