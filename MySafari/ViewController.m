@@ -19,6 +19,7 @@
 
 @implementation ViewController
 
+// Starts EVERYTHING in the app
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSString *addressString = @"http://9gag.com";
@@ -27,7 +28,7 @@
     [self.webView loadRequest:addressRequest];
     self.webView.scrollView.delegate = self;
 }
-
+// this controls the URL Text Feild
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     NSString *newAddressString = [[NSString alloc]init];
@@ -45,9 +46,10 @@
     NSURLRequest *addressRequest = [NSURLRequest requestWithURL:addressURL];
     [self.webView loadRequest:addressRequest];
     return true;
-    
-}
 
+// Controls the "Loading" Spinneer
+    // Start
+}
 -(void)webViewDidStartLoad:(UIWebView *)webView
 {
     [self.spinner startAnimating];
@@ -58,13 +60,16 @@
 {
     [self.spinner stopAnimating];
     self.spinner.hidden = true;
-
+    //Finsih
+    
+// This is the title of the webpage
     NSString *currentWebsiteTitle = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     self.superCoolNavigationItem.title = currentWebsiteTitle;
 
     self.urlTextField.text = [[self.webView.request URL]absoluteString];
 }
 
+// This controls the back button
 - (IBAction)backButtonPressed:(id)sender
 {
     if ([self.webView canGoBack]) {
@@ -72,6 +77,7 @@
     }
 }
 
+// This controls the forward button
 - (IBAction)onForwardButtonPressed:(id)sender
 {
     if ([self.webView canGoForward]) {
@@ -79,17 +85,19 @@
     }
 }
 
-
+// This controls the "Stop" button
 - (IBAction)onStopLoadingButtonPressed:(id)sender
 {
     [self.webView stopLoading];
 }
 
+// This controls the "reload" button
 - (IBAction)onReloadButtonPressed:(id)sender
 {
     [self.webView reload];
 }
 
+// This is the pop up window when the "+" button is pressed
 - (IBAction)onPlusButtonPressed:(id)sender {
     UIAlertView *alertView = [[UIAlertView alloc] init];
     alertView.delegate = self;
@@ -98,7 +106,7 @@
     [alertView show];
 }
 
-// stuff not working yet
+// This hides the text feild for the URL when you scroll.
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (self.lastContentOffset > scrollView.contentOffset.y)
